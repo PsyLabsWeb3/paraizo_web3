@@ -1,27 +1,25 @@
-import { Header } from "@/components/header"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { Header } from '@/components/header'
+import { HeroSection } from '@/components/hero-section'
+import { FeaturedShows } from '@/components/featured-shows'
+import { LiveShowGrid } from '@/components/live-show-grid'
+import { CategoryFilter } from '@/components/category-filter'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen bg-background">
       <Header />
-
-      <main className="flex-1 flex items-center justify-center p-4">
-        <div className="text-center space-y-6 max-w-2xl">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-balance">Live streaming meets Web3</h1>
-          <p className="text-lg md:text-xl text-muted-foreground text-balance">
-            Watch live shows, support your favorite creators with crypto tips, and be part of the decentralized
-            streaming revolution
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" asChild>
-              <Link href="/login">Start Watching</Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild>
-              <Link href="/login">Become a Creator</Link>
-            </Button>
+      <main className="container py-8">
+        <HeroSection />
+        <div className="mt-12">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold">Featured Shows</h2>
+            <CategoryFilter />
           </div>
+          <FeaturedShows />
+        </div>
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold mb-6">Live Now</h2>
+          <LiveShowGrid />
         </div>
       </main>
     </div>
