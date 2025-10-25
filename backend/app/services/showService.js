@@ -1,77 +1,108 @@
-// Mock data for demonstration
-const shows = [];
-const tips = [];
-const streams = [];
+const supabase = require('../../db/supabase');
 
 // Show service functions
 const getAllShows = async ({ category, limit = 20, offset = 0 }) => {
-  let filteredShows = shows;
-  
+  let query = supabase
+    .from('shows')
+    .select('*', { count: 'exact' })
+    .range(parseInt(offset), parseInt(offset) + parseInt(limit) - 1);
+
   if (category && category !== 'all') {
-    filteredShows = shows.filter(show => show.category === category);
+    query = query.eq('category', category);
   }
-  
-  const start = parseInt(offset);
-  const end = start + parseInt(limit);
-  const paginatedShows = filteredShows.slice(start, end);
-  
+
+  const { data: shows, count, error } = await query;
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
   return {
-    shows: paginatedShows,
+    shows: shows || [],
     pagination: {
-      total: filteredShows.length,
+      total: count,
       limit: parseInt(limit),
       offset: parseInt(offset),
-      hasMore: end < filteredShows.length
+      hasMore: parseInt(offset) + parseInt(limit) < count
     }
   };
 };
 
 const getLiveShows = async () => {
-  // In a real app, this would filter for currently live shows
-  return shows.filter(show => show.isLive === true);
+  const { data: shows, error } = await supabase
+    .from('shows')
+    .select('*')
+    .eq('is_live', true);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return shows || [];
 };
 
 const getShowById = async (showId) => {
-  const show = shows.find(s => s.id === parseInt(showId));
+  const { data: show, error } = await supabase
+    .from('shows')
+    .select('*')
+    .eq('id', showId)
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
   return show;
 };
 
 const createShow = async (showData) => {
-  const show = {
-    id: shows.length + 1,
-    ...showData,
-    isLive: false,
-    viewers: 0,
-    createdAt: new Date(),
-    updatedAt: new Date()
-  };
-  
-  shows.push(show);
+  const { data: show, error } = await supabase
+    .from('shows')
+    .insert([{
+      ...showData,
+      is_live: false,
+      viewers: 0,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    }])
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
   return show;
 };
 
 const updateShow = async (showId, updateData) => {
-  const showIndex = shows.findIndex(s => s.id === parseInt(showId));
-  if (showIndex === -1) {
-    throw new Error('Show not found');
+  const { data: show, error } = await supabase
+    .from('shows')
+    .update({
+      ...updateData,
+      updated_at: new Date().toISOString()
+    })
+    .eq('id', showId)
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
   }
-  
-  shows[showIndex] = {
-    ...shows[showIndex],
-    ...updateData,
-    updatedAt: new Date()
-  };
-  
-  return shows[showIndex];
+
+  return show;
 };
 
 const deleteShow = async (showId) => {
-  const showIndex = shows.findIndex(s => s.id === parseInt(showId));
-  if (showIndex === -1) {
-    throw new Error('Show not found');
+  const { error } = await supabase
+    .from('shows')
+    .delete()
+    .eq('id', showId);
+
+  if (error) {
+    throw new Error(error.message);
   }
-  
-  shows.splice(showIndex, 1);
+
   return true;
 };
 

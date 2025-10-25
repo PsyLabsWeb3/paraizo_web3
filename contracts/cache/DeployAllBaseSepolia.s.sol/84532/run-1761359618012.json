@@ -1,0 +1,22 @@
+{
+  "transactions": [
+    {
+      "rpc": "https://base-sepolia.drpc.org"
+    },
+    {
+      "rpc": "https://base-sepolia.drpc.org"
+    },
+    {
+      "rpc": "https://base-sepolia.drpc.org"
+    },
+    {
+      "rpc": "https://base-sepolia.drpc.org"
+    },
+    {
+      "rpc": "https://base-sepolia.drpc.org"
+    },
+    {
+      "rpc": "https://base-sepolia.drpc.org"
+    }
+  ]
+}

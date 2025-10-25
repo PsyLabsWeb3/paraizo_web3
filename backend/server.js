@@ -21,6 +21,11 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+
 // Routes
 app.get('/', (req, res) => {
   res.json({ message: 'Paraizo Web3 Streaming API' });
@@ -44,4 +49,5 @@ app.use('*', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log(`Health check available at http://localhost:${PORT}/health`);
 });

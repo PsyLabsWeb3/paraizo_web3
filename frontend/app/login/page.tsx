@@ -2,9 +2,9 @@ import { Header } from '@/components/header'
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background px-4 md:px-8 lg:px-16">
       <Header />
-      <main className="container py-8 flex items-center justify-center">
+      <main className="py-8 flex items-center justify-center">
         <div className="max-w-md w-full space-y-8">
           <div className="text-center">
             <h1 className="text-3xl font-bold">Welcome to Paraizo</h1>

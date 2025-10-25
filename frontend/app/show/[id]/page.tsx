@@ -6,9 +6,9 @@ import { ChatPanel } from '@/components/chat-panel'
 
 export default function ShowDetailPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background px-4 md:px-8 lg:px-16">
       <Header />
-      <main className="container py-8">
+      <main className="py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             <VideoPlayer />

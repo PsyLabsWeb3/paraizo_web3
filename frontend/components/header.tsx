@@ -2,27 +2,22 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { useAccount } from 'wagmi'
 import { Moon, Sun, Menu, Wallet, Users, Settings, Home, Tv } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuTrigger 
-} from '@/components/ui/dropdown-menu'
+import { Badge } from '@/components/ui/badge'
 import { useTheme } from 'next-themes'
-import { 
-  Sheet, 
-  SheetContent, 
-  SheetHeader, 
-  SheetTitle, 
-  SheetTrigger 
-} from '@/components/ui/sheet'
+import { WalletDropdown } from '@/components/wallet-dropdown'
+import { ClientOnlyDropdown } from '@/components/client-only-dropdown'
+import { ClientOnlySheet } from '@/components/client-only-sheet'
 
 export function Header() {
   const { theme, setTheme } = useTheme()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
+  const { isConnected } = useAccount()
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark')
@@ -32,11 +27,12 @@ export function Header() {
     { name: 'Home', href: '/', icon: Home },
     { name: 'Browse', href: '/browse', icon: Tv },
     { name: 'Creators', href: '/creators', icon: Users },
+    { name: 'Test Contracts', href: '/test-contracts', icon: Tv },
   ]
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
-      <div className="container flex h-16 items-center justify-between px-4">
+      <div className="flex h-16 items-center justify-between px-4 md:px-8 lg:px-16 xl:px-24 w-full">
         {/* Logo */}
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2 font-bold text-xl">
@@ -51,14 +47,27 @@ export function Header() {
         <nav className="hidden md:flex items-center gap-6 text-sm">
           {navItems.map((item) => {
             const Icon = item.icon
+            const isActive = pathname === item.href
             return (
               <Link 
                 key={item.name}
                 href={item.href}
-                className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
+                className={`flex items-center gap-1 transition-colors relative ${
+                  isActive 
+                    ? 'text-foreground' 
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
               >
                 <Icon className="h-4 w-4" />
                 <span>{item.name}</span>
+                {item.name === 'Creators' && isConnected && (
+                  <Badge variant="secondary" className="ml-1 text-xs bg-purple-500/20 text-purple-700 dark:text-purple-300">
+                    Web3
+                  </Badge>
+                )}
+                {isActive && (
+                  <div className="absolute -bottom-4 left-0 right-0 h-0.5 bg-primary rounded-full" />
+                )}
               </Link>
             )
           })}
@@ -66,10 +75,9 @@ export function Header() {
 
         {/* Desktop Right Section */}
         <div className="hidden md:flex items-center gap-4">
-          <ConnectButton 
-            chainStatus="icon" 
-            showBalance={{ smallScreen: false, largeScreen: true }} 
-          />
+          <div className="relative">
+            <WalletDropdown />
+          </div>
           
           <Button 
             variant="ghost" 
@@ -77,28 +85,11 @@ export function Header() {
             onClick={toggleTheme}
             aria-label="Toggle theme"
           >
-            {theme === 'dark' ? (
-              <Sun className="h-5 w-5" />
-            ) : (
-              <Moon className="h-5 w-5" />
-            )}
+            <Sun className="h-5 w-5 dark:hidden block" />
+            <Moon className="h-5 w-5 hidden dark:block" />
           </Button>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="Settings">
-                <Settings className="h-5 w-5" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem asChild>
-                <Link href="/settings">Settings</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard">Dashboard</Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <ClientOnlyDropdown />
         </div>
 
         {/* Mobile Menu Button */}
@@ -109,72 +100,11 @@ export function Header() {
             onClick={toggleTheme}
             aria-label="Toggle theme"
           >
-            {theme === 'dark' ? (
-              <Sun className="h-5 w-5" />
-            ) : (
-              <Moon className="h-5 w-5" />
-            )}
+            <Sun className="h-5 w-5 dark:hidden block" />
+            <Moon className="h-5 w-5 hidden dark:block" />
           </Button>
 
-          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="Menu">
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right">
-              <SheetHeader>
-                <SheetTitle>Menu</SheetTitle>
-              </SheetHeader>
-              
-              <div className="flex flex-col gap-4 mt-6">
-                {navItems.map((item) => {
-                  const Icon = item.icon
-                  return (
-                    <Link 
-                      key={item.name}
-                      href={item.href}
-                      className="flex items-center gap-3 py-2 text-muted-foreground hover:text-foreground transition-colors"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      <Icon className="h-5 w-5" />
-                      <span>{item.name}</span>
-                    </Link>
-                  )
-                })}
-
-                <div className="pt-4 mt-4 border-t">
-                  <ConnectButton 
-                    chainStatus="icon" 
-                    showBalance={{ smallScreen: true, largeScreen: true }} 
-                  />
-                  
-                  <div className="mt-4 flex flex-col gap-2">
-                    <Button 
-                      variant="ghost" 
-                      className="w-full justify-start"
-                      asChild
-                    >
-                      <Link href="/dashboard">
-                        <Wallet className="h-4 w-4 mr-2" />
-                        Dashboard
-                      </Link>
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      className="w-full justify-start"
-                      asChild
-                    >
-                      <Link href="/settings">
-                        <Settings className="h-4 w-4 mr-2" />
-                        Settings
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+          <ClientOnlySheet />
         </div>
       </div>
     </header>

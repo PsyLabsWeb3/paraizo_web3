@@ -1,29 +1,55 @@
-// Mock data for demonstration
-const tips = [];
-const users = []; // This would come from the database in a real app
+const supabase = require('../../db/supabase');
 
 // Tip service functions
 const getTipsForStreamer = async (streamerId) => {
-  return tips.filter(tip => tip.toUserId === parseInt(streamerId));
+  const { data: tips, error } = await supabase
+    .from('tips')
+    .select('*')
+    .eq('to_user_id', streamerId)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return tips || [];
 };
 
 const recordTip = async (tipData) => {
-  const tip = {
-    id: tips.length + 1,
-    ...tipData,
-    createdAt: new Date()
-  };
-  
-  tips.push(tip);
+  const { data: tip, error } = await supabase
+    .from('tips')
+    .insert([{
+      ...tipData,
+      created_at: new Date().toISOString()
+    }])
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
   return tip;
 };
 
 const getTotalTips = async (streamerId) => {
-  const streamerTips = tips.filter(tip => tip.toUserId === parseInt(streamerId));
-  const total = streamerTips.reduce((sum, tip) => {
-    return sum + parseFloat(tip.amount);
+  const { data: result, error } = await supabase
+    .from('tips')
+    .select('amount', { count: 'exact' })
+    .eq('to_user_id', streamerId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  if (!result || result.length === 0) {
+    return 0;
+  }
+
+  const total = result.reduce((sum, tip) => {
+    return sum + (parseFloat(tip.amount) || 0);
   }, 0);
-  
+
   return total;
 };
 

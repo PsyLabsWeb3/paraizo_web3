@@ -6,9 +6,9 @@ import { CategoryFilter } from '@/components/category-filter'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background px-4 md:px-8 lg:px-16">
       <Header />
-      <main className="container py-8">
+      <main className="py-8">
         <HeroSection />
         <div className="mt-12">
           <div className="flex justify-between items-center mb-6">

@@ -1,0 +1,15 @@
+
+✘ node v24.9.0, and next.js v16.0.0 are not yet supported in the Community edition of Console Ninja.
+We are working hard on it for you https://tinyurl.com/3h9mtwra.
+
+Estimated release dates:
+  - Community users: around 21st December, 2025 (subject to team availability)
+  - PRO users:       priority access is available now
+
+ ⚠ `images.domains` is deprecated in favor of `images.remotePatterns`. Please update next.config.mjs to protect your application from malicious users.
+   ▲ Next.js 16.0.0 (Turbopack)
+   - Local:        http://localhost:3006
+   - Network:      http://192.168.1.91:3006
+
+ ✓ Starting...
+ ✓ Ready in 361ms

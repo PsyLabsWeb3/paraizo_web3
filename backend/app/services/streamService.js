@@ -1,10 +1,18 @@
-// Mock data for demonstration
-const streams = [];
-const shows = []; // This would be from the show service in a real app
+const supabase = require('../../db/supabase');
 
 // Stream service functions
 const getStreamStatus = async (streamerId) => {
-  const stream = streams.find(s => s.streamerId === parseInt(streamerId) && s.isActive);
+  const { data: stream, error } = await supabase
+    .from('streams')
+    .select('*')
+    .eq('streamer_id', streamerId)
+    .eq('is_active', true)
+    .single();
+
+  if (error && error.code !== 'PGRST116') { // PGRST116 means no rows found
+    throw new Error(error.message);
+  }
+
   return {
     isActive: !!stream,
     streamId: stream ? stream.id : null,
@@ -13,58 +21,80 @@ const getStreamStatus = async (streamerId) => {
 };
 
 const startStream = async (streamData) => {
-  const stream = {
-    id: streams.length + 1,
-    ...streamData,
-    isActive: true,
-    viewers: 0,
-    startedAt: new Date(),
-    createdAt: new Date(),
-    updatedAt: new Date()
-  };
-  
-  streams.push(stream);
+  const { data: stream, error } = await supabase
+    .from('streams')
+    .insert([{
+      ...streamData,
+      is_active: true,
+      viewers: 0,
+      started_at: new Date().toISOString(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    }])
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
   return stream;
 };
 
 const endStream = async (streamId) => {
-  const streamIndex = streams.findIndex(s => s.id === parseInt(streamId) && s.isActive);
-  if (streamIndex === -1) {
-    throw new Error('Active stream not found');
+  const { error } = await supabase
+    .from('streams')
+    .update({
+      is_active: false,
+      ended_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    })
+    .eq('id', streamId)
+    .eq('is_active', true);
+
+  if (error) {
+    throw new Error(error.message);
   }
-  
-  streams[streamIndex].isActive = false;
-  streams[streamIndex].endedAt = new Date();
-  streams[streamIndex].updatedAt = new Date();
-  
+
   return true;
 };
 
 const getViewerCount = async (streamId) => {
-  const stream = streams.find(s => s.id === parseInt(streamId));
-  if (!stream || !stream.isActive) {
+  const { data: stream, error } = await supabase
+    .from('streams')
+    .select('viewers')
+    .eq('id', streamId)
+    .eq('is_active', true)
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  if (!stream) {
     throw new Error('Stream not found or not active');
   }
-  
+
   return stream.viewers;
 };
 
-// Increment viewer count (simulated)
-const addViewer = async (streamId) => {
-  const stream = streams.find(s => s.id === parseInt(streamId));
-  if (stream && stream.isActive) {
-    stream.viewers += 1;
-    stream.updatedAt = new Date();
-  }
-};
+// Increment viewer count
+const updateViewerCount = async (streamId, newViewerCount) => {
+  const { data: stream, error } = await supabase
+    .from('streams')
+    .update({
+      viewers: newViewerCount,
+      updated_at: new Date().toISOString()
+    })
+    .eq('id', streamId)
+    .select()
+    .single();
 
-// Decrement viewer count (simulated)
-const removeViewer = async (streamId) => {
-  const stream = streams.find(s => s.id === parseInt(streamId));
-  if (stream && stream.isActive && stream.viewers > 0) {
-    stream.viewers -= 1;
-    stream.updatedAt = new Date();
+  if (error) {
+    throw new Error(error.message);
   }
+
+  return stream;
 };
 
 module.exports = {
@@ -72,6 +102,5 @@ module.exports = {
   startStream,
   endStream,
   getViewerCount,
-  addViewer,
-  removeViewer
+  updateViewerCount
 };
