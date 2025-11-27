@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
@@ -19,15 +19,20 @@ export function Header() {
   const pathname = usePathname()
   const { isConnected } = useAccount()
 
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark')
   }
 
   const navItems = [
-    { name: 'Home', href: '/', icon: Home },
+    { name: 'My Dashboard', href: '/dashboard', icon: Settings },
     { name: 'Browse', href: '/browse', icon: Tv },
     { name: 'Creators', href: '/creators', icon: Users },
-    { name: 'Test Contracts', href: '/test-contracts', icon: Tv },
   ]
 
   return (
@@ -49,24 +54,18 @@ export function Header() {
             const Icon = item.icon
             const isActive = pathname === item.href
             return (
-              <Link 
+              <Link
                 key={item.name}
                 href={item.href}
-                className={`flex items-center gap-1 transition-colors relative ${
-                  isActive 
-                    ? 'text-foreground' 
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
+                className={`flex items-center gap-1 transition-colors relative ${isActive
+                  ? 'text-[#0187fb]'
+                  : 'text-[#0187fb]/70 hover:text-[#0187fb]'
+                  }`}
               >
                 <Icon className="h-4 w-4" />
                 <span>{item.name}</span>
-                {item.name === 'Creators' && isConnected && (
-                  <Badge variant="secondary" className="ml-1 text-xs bg-purple-500/20 text-purple-700 dark:text-purple-300">
-                    Web3
-                  </Badge>
-                )}
                 {isActive && (
-                  <div className="absolute -bottom-4 left-0 right-0 h-0.5 bg-primary rounded-full" />
+                  <div className="absolute -bottom-4 left-0 right-0 h-0.5 bg-[#0187fb] rounded-full" />
                 )}
               </Link>
             )
@@ -78,10 +77,10 @@ export function Header() {
           <div className="relative">
             <WalletDropdown />
           </div>
-          
-          <Button 
-            variant="ghost" 
-            size="icon" 
+
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={toggleTheme}
             aria-label="Toggle theme"
           >
@@ -94,9 +93,9 @@ export function Header() {
 
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center gap-2">
-          <Button 
-            variant="ghost" 
-            size="icon" 
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={toggleTheme}
             aria-label="Toggle theme"
           >

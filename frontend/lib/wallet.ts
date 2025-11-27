@@ -27,7 +27,7 @@ const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
 
 // Conditionally add walletConnect connector only if projectId is available
 const connectors = [
-  injected({ 
+  injected({
     target: ['metaMask'] // Only target MetaMask for the injected connector
   }),
   coinbaseWallet({
@@ -50,11 +50,10 @@ if (projectId && projectId.trim() !== '') {
 }
 
 export const config = createConfig({
-  chains: [localChain, base, baseSepolia],
+  chains: [baseSepolia, base],
   transports: {
-    [localChain.id]: http(),
-    [base.id]: http(process.env.NEXT_PUBLIC_BASE_RPC_URL),
-    [baseSepolia.id]: http(process.env.NEXT_PUBLIC_BASE_SEPOLIA_RPC_URL),
+    [base.id]: http(process.env.NEXT_PUBLIC_BASE_RPC_URL || 'https://mainnet.base.org'),
+    [baseSepolia.id]: http(process.env.NEXT_PUBLIC_BASE_SEPOLIA_RPC_URL || 'https://sepolia.base.org'),
   },
   connectors,
 })

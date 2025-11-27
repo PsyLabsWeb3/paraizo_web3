@@ -23,7 +23,7 @@ export default function CreatorsPage() {
     {
       id: 2,
       username: "defiexplainer",
-      avatar: "/avatars/02.png", 
+      avatar: "/avatars/02.png",
       followers: 8930,
       totalTips: "8.2 ETH",
       liveViewers: 0,
@@ -90,29 +90,29 @@ export default function CreatorsPage() {
           </div>
 
           {/* Web3 Platform Stats */}
-          <Card className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 border-purple-200 dark:border-purple-800">
+          <Card className="bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
-                <TrendingUp className="h-5 w-5 text-purple-500" />
+                <TrendingUp className="h-5 w-5 text-primary" />
                 <span>Platform Stats - Base Network</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">156</div>
+                  <div className="text-2xl font-bold text-primary">156</div>
                   <div className="text-sm text-muted-foreground">Active Creators</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">127.3 ETH</div>
+                  <div className="text-2xl font-bold text-secondary">127.3 ETH</div>
                   <div className="text-sm text-muted-foreground">Total Tips Sent</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-green-600 dark:text-green-400">12,450</div>
+                  <div className="text-2xl font-bold text-accent">12,450</div>
                   <div className="text-sm text-muted-foreground">Total Viewers</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">Base</div>
+                  <div className="text-2xl font-bold text-secondary">Base</div>
                   <div className="text-sm text-muted-foreground">Network</div>
                 </div>
               </div>
@@ -126,9 +126,9 @@ export default function CreatorsPage() {
                 <CardHeader className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <Avatar className="h-12 w-12 ring-2 ring-purple-500/20">
+                      <Avatar className="h-12 w-12 ring-2 ring-primary/20">
                         <AvatarImage src={creator.avatar} alt={`${creator.username} avatar`} />
-                        <AvatarFallback className="bg-gradient-to-br from-purple-500 to-blue-500 text-white">
+                        <AvatarFallback className="bg-gradient-to-br from-primary to-secondary text-primary-foreground">
                           {creator.username[0].toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
@@ -157,22 +157,22 @@ export default function CreatorsPage() {
                       </div>
                       <span className="text-muted-foreground">followers</span>
                     </div>
-                    
+
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
-                        <Coins className="h-4 w-4 text-yellow-500" />
-                        <span className="font-semibold text-yellow-600 dark:text-yellow-400">
+                        <Coins className="h-4 w-4 text-accent" />
+                        <span className="font-semibold text-accent">
                           {creator.totalTips}
                         </span>
                       </div>
                       <span className="text-muted-foreground">earned</span>
                     </div>
-                    
+
                     {creator.isLive && (
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
-                          <Eye className="h-4 w-4 text-red-500" />
-                          <span className="text-red-600 dark:text-red-400 font-semibold">
+                          <Eye className="h-4 w-4 text-destructive" />
+                          <span className="text-destructive font-semibold">
                             {creator.liveViewers}
                           </span>
                         </div>
@@ -182,20 +182,20 @@ export default function CreatorsPage() {
                   </div>
 
                   <div className="flex space-x-2 pt-2">
-                    <Button 
-                      variant="default" 
-                      className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+                    <Button
+                      variant="default"
+                      className="flex-1"
                       asChild
                     >
                       <Link href={`/show/${creator.id}`}>
                         {creator.isLive ? 'Watch Live' : 'View Profile'}
                       </Link>
                     </Button>
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       size="icon"
                       title="Send Tip"
-                      className="hover:bg-yellow-50 hover:border-yellow-400 dark:hover:bg-yellow-950"
+                      className="hover:bg-accent/10 hover:border-accent"
                     >
                       <Coins className="h-4 w-4" />
                     </Button>
@@ -208,12 +208,12 @@ export default function CreatorsPage() {
           {/* Live Creators Section */}
           <div className="mt-12">
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-              <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+              <div className="w-3 h-3 bg-destructive rounded-full animate-pulse"></div>
               Live Now
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {creators.filter(creator => creator.isLive).map((creator) => (
-                <Card key={`live-${creator.id}`} className="border-red-200 dark:border-red-800 bg-red-50/50 dark:bg-red-950/20">
+                <Card key={`live-${creator.id}`} className="border-destructive/20 bg-destructive/5">
                   <CardContent className="p-4">
                     <div className="flex items-center space-x-3">
                       <Avatar className="h-10 w-10">
@@ -225,7 +225,7 @@ export default function CreatorsPage() {
                         <p className="text-sm text-muted-foreground">{creator.category}</p>
                       </div>
                       <div className="text-right">
-                        <div className="flex items-center text-sm text-red-600 dark:text-red-400">
+                        <div className="flex items-center text-sm text-destructive">
                           <Eye className="h-3 w-3 mr-1" />
                           {creator.liveViewers}
                         </div>
@@ -239,13 +239,13 @@ export default function CreatorsPage() {
           </div>
 
           {/* Connect Wallet CTA */}
-          <Card className="bg-gradient-to-r from-purple-600 to-blue-600 text-white border-0">
+          <Card className="bg-gradient-to-r from-primary to-secondary text-primary-foreground border-0">
             <CardContent className="p-8 text-center">
               <h3 className="text-xl font-bold mb-2">Start Supporting Creators</h3>
-              <p className="mb-4 text-purple-100">
+              <p className="mb-4 opacity-90">
                 Connect your wallet to send tips and join the Web3 streaming revolution
               </p>
-              <Button variant="secondary" size="lg" className="bg-white text-purple-600 hover:bg-purple-50">
+              <Button variant="secondary" size="lg">
                 Connect Wallet
               </Button>
             </CardContent>

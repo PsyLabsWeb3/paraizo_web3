@@ -1,0 +1,15 @@
+
+> my-v0-project@0.1.0 dev /home/robinhodl/psylabs/paraizoWeb3/paraizo_web3/frontend
+> next dev
+
+ ⚠ `images.domains` is deprecated in favor of `images.remotePatterns`. Please update next.config.mjs to protect your application from malicious users.
+   ▲ Next.js 16.0.0 (Turbopack)
+   - Local:        http://localhost:5000
+   - Network:      http://192.168.0.9:5000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ⨯ Unable to acquire lock at /home/robinhodl/psylabs/paraizoWeb3/paraizo_web3/frontend/.next/dev/lock, is another instance of next dev running?
+   Suggestion: If you intended to restart next dev, terminate the other process, and then try again.
+[?25h
+ ELIFECYCLE  Command failed with exit code 1.

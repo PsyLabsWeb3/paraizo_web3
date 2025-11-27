@@ -2,7 +2,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useAccount, useBalance, useWriteContract, useReadContract, parseEther } from 'wagmi';
+import { useAccount, useBalance, useWriteContract, useReadContract } from 'wagmi';
+import { parseEther } from 'viem';
 import { CONTRACT_ADDRESSES } from '@/lib/constants';
 
 const tokenSwapAbi = [
@@ -145,7 +146,7 @@ export default function TokenPurchase() {
   const handleEthAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const amount = e.target.value;
     setEthAmount(amount);
-    
+
     if (rate) {
       const tokens = parseFloat(amount) * Number(rate) / 1e18;
       setTokenAmount(tokens.toString());
@@ -160,7 +161,7 @@ export default function TokenPurchase() {
 
     // Convert ETH amount to BigInt (wei)
     const ethValue = parseEther(ethAmount);
-    
+
     writeContract({
       address: TOKEN_SWAP_CONTRACT_ADDRESS as `0x${string}`,
       abi: tokenSwapAbi,
@@ -190,7 +191,7 @@ export default function TokenPurchase() {
   return (
     <div className="p-4 bg-white rounded-lg shadow-md max-w-md mx-auto">
       <h2 className="text-xl font-semibold mb-4 text-center">Comprar Paraízo Tokens</h2>
-      
+
       <div className="mb-4">
         <label className="block text-sm font-medium mb-1">Cantidad de ETH a gastar</label>
         <input
@@ -203,14 +204,14 @@ export default function TokenPurchase() {
           min="0"
         />
       </div>
-      
+
       <div className="mb-4">
         <label className="block text-sm font-medium mb-1">Tokens que recibirás</label>
         <div className="w-full p-2 border rounded bg-gray-50">
           {tokenAmount} PARAIZO
         </div>
       </div>
-      
+
       <div className="mb-4 text-sm">
         {rate && (
           <p className="text-gray-600">
@@ -228,7 +229,7 @@ export default function TokenPurchase() {
           </p>
         )}
       </div>
-      
+
       <button
         onClick={handleBuyTokens}
         disabled={isPending || !ethAmount || parseFloat(ethAmount) <= 0}
@@ -236,7 +237,7 @@ export default function TokenPurchase() {
       >
         {isPending ? 'Procesando...' : 'Comprar Tokens'}
       </button>
-      
+
       <div className="mt-4 text-sm text-gray-600">
         <p><strong>Saldo actual:</strong> {balance?.formatted ? `${balance.formatted} ${balance.symbol}` : 'Cargando...'}</p>
       </div>
