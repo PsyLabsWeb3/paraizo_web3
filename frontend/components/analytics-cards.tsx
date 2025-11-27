@@ -2,36 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { TrendingUp, Coins, Users, Eye } from 'lucide-react'
 
 export function AnalyticsCards() {
-  const analytics = [
-    {
-      title: "Total Tips Received",
-      value: "$1,242.50",
-      change: "+12.5%",
-      icon: Coins,
-      color: "text-green-500"
-    },
-    {
-      title: "Total Viewers",
-      value: "12,420",
-      change: "+8.2%",
-      icon: Eye,
-      color: "text-blue-500"
-    },
-    {
-      title: "Active Subscribers",
-      value: "842",
-      change: "+5.3%",
-      icon: Users,
-      color: "text-purple-500"
-    },
-    {
-      title: "Avg. View Time",
-      value: "24m 32s",
-      change: "+3.1%",
-      icon: TrendingUp,
-      color: "text-orange-500"
-    }
-  ]
+  const analytics: Array<{
+    title: string;
+    value: string;
+    change: string;
+    icon: any;
+    color: string;
+  }> = []
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

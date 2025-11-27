@@ -1,3 +1,5 @@
+'use client'
+
 import { Header } from '@/components/header'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -5,77 +7,23 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Coins, Users, Eye, TrendingUp } from 'lucide-react'
 import Link from 'next/link'
+import { useAccount } from 'wagmi'
 
 export default function CreatorsPage() {
+  const { isConnected } = useAccount()
+  
   // Mock data - en producción vendrá del backend/smart contracts
-  const creators = [
-    {
-      id: 1,
-      username: "cryptogamer",
-      avatar: "/avatars/01.png",
-      followers: 15420,
-      totalTips: "12.5 ETH",
-      liveViewers: 234,
-      category: "Gaming",
-      isLive: true,
-      walletAddress: "0x1234...5678"
-    },
-    {
-      id: 2,
-      username: "defiexplainer",
-      avatar: "/avatars/02.png",
-      followers: 8930,
-      totalTips: "8.2 ETH",
-      liveViewers: 0,
-      category: "Education",
-      isLive: false,
-      walletAddress: "0x8765...4321"
-    },
-    {
-      id: 3,
-      username: "nftartist",
-      avatar: "/avatars/03.png",
-      followers: 22100,
-      totalTips: "18.7 ETH",
-      liveViewers: 156,
-      category: "Art",
-      isLive: true,
-      walletAddress: "0x9876...1234"
-    },
-    {
-      id: 4,
-      username: "web3dev",
-      avatar: "/avatars/04.png",
-      followers: 6750,
-      totalTips: "5.3 ETH",
-      liveViewers: 0,
-      category: "Tech",
-      isLive: false,
-      walletAddress: "0x4567...8901"
-    },
-    {
-      id: 5,
-      username: "tradingpro",
-      avatar: "/avatars/05.png",
-      followers: 31200,
-      totalTips: "25.1 ETH",
-      liveViewers: 445,
-      category: "Finance",
-      isLive: true,
-      walletAddress: "0x2345...6789"
-    },
-    {
-      id: 6,
-      username: "musicdao",
-      avatar: "/avatars/06.png",
-      followers: 12800,
-      totalTips: "9.8 ETH",
-      liveViewers: 0,
-      category: "Music",
-      isLive: false,
-      walletAddress: "0x3456...7890"
-    }
-  ]
+  const creators: Array<{
+    id: number;
+    username: string;
+    avatar: string;
+    followers: number;
+    totalTips: string;
+    liveViewers: number;
+    category: string;
+    isLive: boolean;
+    walletAddress: string;
+  }> = []
 
   return (
     <div className="min-h-screen bg-background px-4 md:px-8 lg:px-16">
@@ -100,15 +48,15 @@ export default function CreatorsPage() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">156</div>
+                  <div className="text-2xl font-bold text-primary">0</div>
                   <div className="text-sm text-muted-foreground">Active Creators</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-secondary">127.3 ETH</div>
+                  <div className="text-2xl font-bold text-secondary">0 ETH</div>
                   <div className="text-sm text-muted-foreground">Total Tips Sent</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-accent">12,450</div>
+                  <div className="text-2xl font-bold text-accent">0</div>
                   <div className="text-sm text-muted-foreground">Total Viewers</div>
                 </div>
                 <div className="text-center">
@@ -238,18 +186,20 @@ export default function CreatorsPage() {
             </div>
           </div>
 
-          {/* Connect Wallet CTA */}
-          <Card className="bg-gradient-to-r from-primary to-secondary text-primary-foreground border-0">
-            <CardContent className="p-8 text-center">
-              <h3 className="text-xl font-bold mb-2">Start Supporting Creators</h3>
-              <p className="mb-4 opacity-90">
-                Connect your wallet to send tips and join the Web3 streaming revolution
-              </p>
-              <Button variant="secondary" size="lg">
-                Connect Wallet
-              </Button>
-            </CardContent>
-          </Card>
+          {/* Connect Wallet CTA - Hidden when wallet is connected */}
+          {!isConnected && (
+            <Card className="bg-gradient-to-r from-primary to-secondary text-primary-foreground border-0">
+              <CardContent className="p-8 text-center">
+                <h3 className="text-xl font-bold mb-2">Start Supporting Creators</h3>
+                <p className="mb-4 opacity-90">
+                  Connect your wallet to send tips and join the Web3 streaming revolution
+                </p>
+                <Button variant="default" size="lg">
+                  Connect Wallet
+                </Button>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </main>
     </div>

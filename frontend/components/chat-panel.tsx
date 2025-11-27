@@ -4,12 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Send, Bot } from 'lucide-react'
 
 export function ChatPanel() {
-  const mockMessages = [
-    { id: '1', user: 'CryptoGuru', message: 'Great explanation so far!', timestamp: '2:34 PM' },
-    { id: '2', user: 'DeFiMaster', message: 'When will you cover yield farming?', timestamp: '2:35 PM' },
-    { id: '3', user: 'NFTCollector', message: 'Amazing project! How do I get involved?', timestamp: '2:36 PM' },
-    { id: '4', user: 'Web3Newbie', message: 'Can you slow down a bit? New to this', timestamp: '2:37 PM' },
-  ]
+  const mockMessages: Array<{id: string, user: string, message: string, timestamp: string}> = []
 
   return (
     <Card>

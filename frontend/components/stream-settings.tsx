@@ -14,12 +14,12 @@ export function StreamSettings() {
       <CardContent className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="title">Stream Title</Label>
-          <Input id="title" placeholder="Enter stream title" />
+          <Input id="title" placeholder="" />
         </div>
         
         <div className="space-y-2">
           <Label htmlFor="description">Description</Label>
-          <Textarea id="description" placeholder="Describe your stream" />
+          <Textarea id="description" placeholder="" />
         </div>
         
         <div className="space-y-2">
@@ -41,12 +41,12 @@ export function StreamSettings() {
         
         <div className="space-y-2">
           <Label htmlFor="tags">Tags</Label>
-          <Input id="tags" placeholder="Add tags separated by commas" />
+          <Input id="tags" placeholder="" />
         </div>
         
         <div className="space-y-2">
           <Label htmlFor="youtube">YouTube Live URL</Label>
-          <Input id="youtube" placeholder="https://youtube.com/live/..." />
+          <Input id="youtube" placeholder="" />
         </div>
         
         <Button className="w-full mt-4">Save Settings</Button>

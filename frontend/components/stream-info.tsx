@@ -9,8 +9,8 @@ export function StreamInfo() {
       <CardHeader>
         <div className="flex justify-between items-start">
           <div>
-            <CardTitle>Live Coding with Web3</CardTitle>
-            <p className="text-muted-foreground">@devwithnoname</p>
+            <CardTitle>Stream Title</CardTitle>
+            <p className="text-muted-foreground">@creator</p>
           </div>
           <Badge variant="secondary">Tech</Badge>
         </div>
@@ -19,17 +19,16 @@ export function StreamInfo() {
         <div className="flex flex-wrap gap-4 mb-4">
           <div className="flex items-center gap-2">
             <Users className="h-4 w-4" />
-            <span>1,242 viewers</span>
+            <span>0 viewers</span>
           </div>
           <div className="flex items-center gap-2">
             <Heart className="h-4 w-4" />
-            <span>242 followers</span>
+            <span>0 followers</span>
           </div>
         </div>
         
         <p className="text-muted-foreground mb-4">
-          Building a decentralized application with React, Solidity, and Web3 technologies. 
-          Live coding session with Q&A.
+          Stream description will appear here.
         </p>
         
         <div className="flex gap-2">

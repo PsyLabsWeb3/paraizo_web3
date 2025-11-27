@@ -35,18 +35,37 @@ export function WalletDropdown() {
     }
   }, [])
 
-  const handleConnect = (connector: any) => {
-    console.log('Attempting to connect to connector:', connector.name, connector.id)
-    connect({ connector }, {
-      onError: (error) => {
-        console.error('Wallet connection error:', error)
-        alert(`Connection failed: ${error?.message || 'Unknown error'}`)
-      },
-      onSuccess: (data) => {
-        console.log('Wallet connected successfully:', data)
-        setIsOpen(false)
+  const handleConnect = async (connector: any) => {
+    try {
+      console.log('Attempting to connect to connector:', connector.name, connector.id)
+      const result = await connect({ connector })
+      console.log('Wallet connected successfully:', result)
+      setIsOpen(false)
+    } catch (error: any) {
+      console.error('Wallet connection error:', error)
+      // Show more user-friendly error messages
+      let errorMessage = 'Failed to connect wallet'
+      if (error?.message?.includes('User rejected')) {
+        errorMessage = 'Connection rejected. Please try again.'
+      } else if (error?.message?.includes('No Ethereum provider')) {
+        errorMessage = 'No Ethereum wallet found. Please install MetaMask or use Coinbase Wallet.'
+      } else if (error?.message) {
+        errorMessage = error.message
       }
-    })
+      
+      // Show error in a more elegant way than alert
+      const errorDiv = document.createElement('div')
+      errorDiv.className = 'fixed top-4 right-4 bg-destructive text-destructive-foreground px-4 py-2 rounded-md shadow-lg z-50'
+      errorDiv.textContent = errorMessage
+      document.body.appendChild(errorDiv)
+      
+      // Remove error message after 4 seconds
+      setTimeout(() => {
+        if (document.body.contains(errorDiv)) {
+          document.body.removeChild(errorDiv)
+        }
+      }, 4000)
+    }
   }
 
   // Prevent server/client mismatch by only rendering after mount
@@ -114,7 +133,6 @@ export function WalletDropdown() {
                     key={connector.uid}
                     className="w-full flex items-center justify-center gap-3 py-3 px-4 shadow-sm rounded-lg hover:bg-accent transition-colors bg-card text-card-foreground border border-border"
                     onClick={() => handleConnect(connector)}
-                    disabled={!connector.ready}
                   >
                     {connector.id === 'injected' && (
                       <img
@@ -158,7 +176,6 @@ export function WalletDropdown() {
                     key={connector.uid}
                     className="w-full flex items-center justify-center gap-3 py-3 px-4 shadow-sm rounded-lg hover:bg-accent transition-colors bg-card text-card-foreground border border-border"
                     onClick={() => handleConnect(connector)}
-                    disabled={!connector.ready}
                   >
                     {connector.id === 'walletConnect' && (
                       <img

@@ -10,13 +10,7 @@ interface Tip {
   currency: string
 }
 
-const mockTips: Tip[] = [
-  { id: '1', from: '0x1234...5678', amount: '0.12', timestamp: '2 min ago', currency: 'ETH' },
-  { id: '2', from: '0xabcd...efgh', amount: '45.50', timestamp: '5 min ago', currency: 'USDC' },
-  { id: '3', from: '0x9876...5432', amount: '0.05', timestamp: '8 min ago', currency: 'ETH' },
-  { id: '4', from: '0xdcba...hgf', amount: '20.00', timestamp: '12 min ago', currency: 'USDC' },
-  { id: '5', from: '0x1111...2222', amount: '0.08', timestamp: '15 min ago', currency: 'ETH' },
-]
+const mockTips: Tip[] = []
 
 export function RecentTips() {
   return (

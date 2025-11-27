@@ -13,44 +13,7 @@ interface Show {
   isLive: boolean
 }
 
-const mockShows: Show[] = [
-  {
-    id: '1',
-    title: 'Live Coding with Web3',
-    creator: 'DevWithNoName',
-    viewers: 1242,
-    category: 'Tech',
-    thumbnail: 'https://placehold.co/400x225',
-    isLive: true
-  },
-  {
-    id: '2',
-    title: 'Crypto Market Analysis',
-    creator: 'CryptoGuru',
-    viewers: 3567,
-    category: 'Finance',
-    thumbnail: 'https://placehold.co/400x225',
-    isLive: true
-  },
-  {
-    id: '3',
-    title: 'Gaming with the Community',
-    creator: 'ProGamer',
-    viewers: 2109,
-    category: 'Gaming',
-    thumbnail: 'https://placehold.co/400x225',
-    isLive: true
-  },
-  {
-    id: '4',
-    title: 'Web3 AMA Session',
-    creator: 'BlockchainExpert',
-    viewers: 876,
-    category: 'Education',
-    thumbnail: 'https://placehold.co/400x225',
-    isLive: true
-  }
-]
+const mockShows: Show[] = []
 
 export function FeaturedShows() {
   return (

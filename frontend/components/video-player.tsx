@@ -9,10 +9,10 @@ export function VideoPlayer() {
             <div className="bg-muted rounded-lg w-full h-full flex items-center justify-center">
               <div className="space-y-4">
                 <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-64 md:h-96 flex items-center justify-center text-gray-500">
-                  YouTube Live Player would appear here
+                  Video Player
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  This is where the YouTube Live stream would appear
+                  Video player will appear here
                 </p>
               </div>
             </div>

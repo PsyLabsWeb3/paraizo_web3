@@ -28,7 +28,7 @@ export function StreamControls() {
           <div className="flex">
             <input
               type="text"
-              value="live_123456789_abcdefghijklmnopqrstuvwxyz"
+              value=""
               readOnly
               className="flex-1 bg-muted rounded-l px-3 py-2 text-sm"
             />

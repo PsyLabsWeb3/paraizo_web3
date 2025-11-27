@@ -13,7 +13,7 @@ export function WalletSettings() {
         <div className="space-y-2">
           <Label>Connected Wallet</Label>
           <div className="flex items-center justify-between p-3 bg-muted rounded-md">
-            <span>0x1234...5678</span>
+            <span>No wallet connected</span>
             <Badge variant="outline">Connected</Badge>
           </div>
         </div>
@@ -23,7 +23,7 @@ export function WalletSettings() {
           <p className="text-sm text-muted-foreground">
             Withdraw your earned tips to your connected wallet
           </p>
-          <Button variant="secondary" className="w-full">
+          <Button variant="default" className="w-full">
             Withdraw All Tips
           </Button>
         </div>

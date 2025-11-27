@@ -14,27 +14,27 @@ export function ProfileSettings() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="firstName">First Name</Label>
-            <Input id="firstName" placeholder="John" />
+            <Input id="firstName" placeholder="" />
           </div>
           <div className="space-y-2">
             <Label htmlFor="lastName">Last Name</Label>
-            <Input id="lastName" placeholder="Doe" />
+            <Input id="lastName" placeholder="" />
           </div>
         </div>
         
         <div className="space-y-2">
           <Label htmlFor="username">Username</Label>
-          <Input id="username" placeholder="johndoe" />
+          <Input id="username" placeholder="" />
         </div>
         
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" placeholder="john@example.com" />
+          <Input id="email" type="email" placeholder="" />
         </div>
         
         <div className="space-y-2">
           <Label htmlFor="bio">Bio</Label>
-          <Textarea id="bio" placeholder="Tell us about yourself..." />
+          <Textarea id="bio" placeholder="" />
         </div>
         
         <Button>Save Profile</Button>

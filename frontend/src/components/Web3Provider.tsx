@@ -1,7 +1,7 @@
 'use client'
 
 import { WagmiConfig } from 'wagmi'
-import { wagmiConfig } from '../config/wagmi'
+import { config } from '../../lib/wallet'
 import { ReactNode } from 'react'
 
 interface Web3ProviderProps {
@@ -10,7 +10,7 @@ interface Web3ProviderProps {
 
 export const Web3Provider = ({ children }: Web3ProviderProps) => {
   return (
-    <WagmiConfig config={wagmiConfig}>
+    <WagmiConfig config={config}>
       {children}
     </WagmiConfig>
   )
