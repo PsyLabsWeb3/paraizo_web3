@@ -90,6 +90,43 @@ const createTables = async () => {
       );
     `);
 
+    // Streamer settings table
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS streamer_settings (
+        id SERIAL PRIMARY KEY,
+        wallet_address VARCHAR(255) UNIQUE NOT NULL,
+        title VARCHAR(255),
+        description TEXT,
+        category VARCHAR(100),
+        tags TEXT,
+        youtube_url VARCHAR(500),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
+    // Streaming sessions table
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS streaming_sessions (
+        id SERIAL PRIMARY KEY,
+        wallet_address VARCHAR(255) NOT NULL,
+        title VARCHAR(255),
+        description TEXT,
+        category VARCHAR(100),
+        duration INTERVAL,
+        start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        end_time TIMESTAMP,
+        peak_viewers INTEGER DEFAULT 0,
+        average_viewers INTEGER DEFAULT 0,
+        tips_received DECIMAL(15, 6) DEFAULT 0,
+        currency VARCHAR(10) DEFAULT 'ETH',
+        tags TEXT,
+        is_active BOOLEAN DEFAULT FALSE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
     console.log('Database tables created successfully!');
   } catch (error) {
     console.error('Error creating tables:', error);

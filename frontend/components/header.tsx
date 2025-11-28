@@ -11,7 +11,6 @@ import { Badge } from '@/components/ui/badge'
 import { useTheme } from 'next-themes'
 import { WalletDropdown } from '@/components/wallet-dropdown'
 import { ClientOnlyDropdown } from '@/components/client-only-dropdown'
-import { ClientOnlySheet } from '@/components/client-only-sheet'
 
 export function Header() {
   const { theme, setTheme } = useTheme()
@@ -33,6 +32,7 @@ export function Header() {
     { name: 'My Dashboard', href: '/dashboard', icon: Settings },
     { name: 'Browse', href: '/browse', icon: Tv },
     { name: 'Creators', href: '/creators', icon: Users },
+    { name: 'Settings', href: '/settings', icon: Settings },
   ]
 
   return (
@@ -87,8 +87,6 @@ export function Header() {
             <Sun className="h-5 w-5 dark:hidden block" />
             <Moon className="h-5 w-5 hidden dark:block" />
           </Button>
-
-          <ClientOnlyDropdown />
         </div>
 
         {/* Mobile Menu Button */}
@@ -102,8 +100,6 @@ export function Header() {
             <Sun className="h-5 w-5 dark:hidden block" />
             <Moon className="h-5 w-5 hidden dark:block" />
           </Button>
-
-          <ClientOnlySheet />
         </div>
       </div>
     </header>

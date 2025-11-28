@@ -35,6 +35,9 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/shows', require('./routes/shows'));
 app.use('/api/tips', require('./routes/tips'));
 app.use('/api/streams', require('./routes/streams'));
+app.use('/api/settings', require('./routes/settings'));
+app.use('/api/streaming', require('./routes/streaming'));
+app.use('/api/analytics', require('./routes/analytics'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
